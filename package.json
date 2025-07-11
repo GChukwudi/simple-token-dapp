@@ -1,0 +1,28 @@
+{
+  "name": "simple-token-dapp",
+  "version": "1.0.0",
+  "description": "A simple ERC-20 token DApp for transferring tokens using Truffle",
+  "main": "index.js",
+  "scripts": {
+    "compile": "truffle compile",
+    "test": "truffle test",
+    "deploy": "truffle migrate --network sepolia",
+    "deploy:development": "truffle migrate --network development",
+    "deploy:reset": "truffle migrate --reset --network sepolia",
+    "console": "truffle console --network sepolia",
+    "verify": "truffle run verify SimpleToken --network sepolia"
+  },
+  "keywords": ["ethereum", "dapp", "erc20", "token", "blockchain", "truffle"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "truffle": "^5.11.5",
+    "truffle-plugin-verify": "^0.5.31",
+    "dotenv": "^16.3.1",
+    "chai": "^4.3.10"
+  },
+  "dependencies": {
+    "ethers": "^6.8.1"
+  }
+}

@@ -18,7 +18,9 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+const { time } = require('console');
+require('dotenv').config();
 // const infuraKey = "fj4jll3k.....";
 //
 // const fs = require('fs');
@@ -42,11 +44,13 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+    development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 8545,            // Standard Ethereum port (default: none)
+     network_id: "*",       // Any network (default: none)
+     gas: 6721975,          // Gas limit used for deploys (default: ~6700000)
+     gasPrice: 20000000000, // 20 gwei (in wei)
+    },
 
     // Another network with more advanced options...
     // advanced: {
@@ -68,6 +72,15 @@ module.exports = {
       // timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       // skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     // },
+    sepolia: {
+      provider: () => new HDWalletProvider(process.env.PRIVATE_KEY, process.env.SEPOLIA_RPC_URL),
+      network_id: 11155111, // Sepolia's id
+      gas: 4000000, // Gas limit used for deploys (default: ~6700000)
+      gasPrice: 1000000000, // 1 gwei (in wei)
+      confirmations: 2, // # of confs to wait between deployments. (default:
+      timeoutBlocks: 200, // # of blocks before a deployment times out (minimum/default: 50)
+      skipDryRun: true // Skip dry run before migrations? (default: false for public
+    },
 
     // Useful for private networks
     // private: {
@@ -75,25 +88,47 @@ module.exports = {
       // network_id: 2111,   // This network is yours, in the cloud.
       // production: true    // Treats this network as if it was a public net. (default: false)
     // }
+    mainnet: {
+      provider: () => new HDWalletProvider(process.env.PRIVATE_KEY, process.env.MAINNET_RPC_URL),
+      network_id: 1, // Mainnet's id
+      gas: 30000000, // Gas limit used for deploys (default: ~6700000)
+      gasPrice: 2000000000, // 20 gwei (in wei)
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out (minimum/default: 50)
+      skipDryRun: true // Skip dry run before migrations? (default: false for public nets)
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
   mocha: {
-    // timeout: 100000
+    timeout: 100000
   },
 
   // Configure your compilers
   compilers: {
     solc: {
-      // version: "0.5.1",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.19",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
+      settings: {          // See the solidity docs for advice about optimization and evmVersion
+       optimizer: {
+         enabled: true,
+         runs: 200
+       },
       //  evmVersion: "byzantium"
-      // }
+      }
     }
-  }
-}
+  },
+
+  // Truffle DB is enabled by default if you run `truffle develop` or `truffle test`
+  db: {
+    enabled: true,
+  },
+
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+
+  api_keys: {
+    etherscan: process.env.ETHERSCAN_API_KEY
+  },
+};
