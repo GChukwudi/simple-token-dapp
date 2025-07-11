@@ -14,7 +14,7 @@ contract SimpleToken {
     event Approval(address indexed owner, address indexed spender, uint256 value);
     
     constructor(uint256 _initialSupply) {
-        totalSupply = _initialSupply * 10**decimals;
+        totalSupply = _initialSupply * 10**uint256(decimals);
         balanceOf[msg.sender] = totalSupply;
         emit Transfer(address(0), msg.sender, totalSupply);
     }
