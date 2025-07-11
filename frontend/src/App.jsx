@@ -232,13 +232,13 @@ function App() {
                 >
                   {loading ? 'Transferring...' : 'Transfer'}
                 </button>
-                <button 
+                {/* <button 
                   onClick={mintTokens} 
                   disabled={loading || !recipient || !amount}
                   className="action-btn mint-btn"
                 >
                   {loading ? 'Minting...' : 'Mint'}
-                </button>
+                </button> */}
               </div>
             </div>
 
